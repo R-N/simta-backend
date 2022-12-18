@@ -1,4 +1,5 @@
 flask
 sqlalchemy
 flask-jwt-extended
-flask-resftul
+flask-restful
+flask-cors

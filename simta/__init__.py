@@ -3,6 +3,7 @@ import os
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
+from flask_cors import CORS
 
 def create_app(test_config=None):
     # create and configure the app
@@ -45,5 +46,7 @@ def create_app(test_config=None):
     api.add_resource(Revisi, '/revisi/<int:revisi_id>')
     api.add_resource(RevisiList, '/sidang/<int:sidang_id>/revisi', '/ta/<int:sidang_id>/sidang/revisi', '/ta/<int:sidang_id>/revisi', '/revisi/sidang/<int:sidang_id>')
     api.add_resource(FormPomits, '/pomits/form/<int:sidang_id>', '/sidang/<int:sidang_id>/pomits/form', '/ta/<int:sidang_id>/sidang/pomits/form')
+
+    CORS(app)
 
     return app

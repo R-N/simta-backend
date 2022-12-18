@@ -78,7 +78,7 @@ def get(revisi_id, sidang=DEFAULT_SIDANG, penguji=DEFAULT_PENGUJI, penolakan=DEF
     return revisi
 
 
-def fetch(sidang_id, penguji_id, sidang=DEFAULT_SIDANG, penguji=DEFAULT_PENGUJI, penolakan=DEFAULT_PENOLAKAN, ta=DEFAULT_TA, pembimbing=DEFAULT_PEMBIMBING, mhs=DEFAULT_MHS, revisi_terakhir=DEFAULT_REVISI_TERAKHIR, status=None, **kwargs):
+def fetch_0(sidang_id, penguji_id, sidang=False, penguji=DEFAULT_PENGUJI, penolakan=DEFAULT_PENOLAKAN, ta=DEFAULT_TA, pembimbing=DEFAULT_PEMBIMBING, mhs=DEFAULT_MHS, revisi_terakhir=DEFAULT_REVISI_TERAKHIR, status=None, **kwargs):
     with db.Session() as session:
         sidang = models.Sidang._get(session, sidang_id)
         _penguji = [p for p in sidang.penguji if p.id==penguji_id]
@@ -100,3 +100,19 @@ def fetch(sidang_id, penguji_id, sidang=DEFAULT_SIDANG, penguji=DEFAULT_PENGUJI,
             **kwargs
         ) for x in revisi]
     return revisi
+
+def fetch(sidang_id, penguji_id, penguji=DEFAULT_PENGUJI, penolakan=DEFAULT_PENOLAKAN, ta=DEFAULT_TA, pembimbing=DEFAULT_PEMBIMBING, mhs=DEFAULT_MHS, revisi_terakhir=DEFAULT_REVISI_TERAKHIR, status=None, **kwargs):
+    sidang = models.Sidang.get(
+        sidang_id=sidang_id, 
+        user_id=penguji_id,
+        ta=ta,
+        pembimbing=pembimbing,
+        mhs=mhs,
+        penguji=penguji,
+        revisi_terakhir=revisi_terakhir,
+        revisi=True,
+        **kwargs
+    )
+    if status:
+        sidang["revisi"] = [r for r in sidang["revisi"] if r==status]
+    return sidang

@@ -16,11 +16,11 @@ class TAList(Resource):
     @jwt_required()
     def get(self):
         parser = reqparse.RequestParser()
-        parser.add_argument("mhs_id", type=int, help="Id mahasiswa TA")
-        parser.add_argument("pembimbing_id", type=int, help="Id pembimbing TA")
-        parser.add_argument("penguji_id", type=int, help="Id penguji TA, termasuk pembimbing")
-        parser.add_argument("type", type=int, help="Jenis TA (1=Request, 2=Proposal, 3=TA)")
-        parser.add_argument("status", type=int, help="Status TA")
+        parser.add_argument("mhs_id", type=int, help="Id mahasiswa TA", location='args')
+        parser.add_argument("pembimbing_id", type=int, help="Id pembimbing TA", location='args')
+        parser.add_argument("penguji_id", type=int, help="Id penguji TA, termasuk pembimbing", location='args')
+        parser.add_argument("type", type=int, help="Jenis TA (1=Request, 2=Proposal, 3=TA)", location='args')
+        parser.add_argument("status", type=int, help="Status TA", location='args')
         args = parser.parse_args()
 
         user_id = get_jwt_identity()

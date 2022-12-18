@@ -16,7 +16,7 @@ class RevisiList(Resource):
     @jwt_required()
     def get(self, sidang_id):
         parser = reqparse.RequestParser()
-        parser.add_argument("status", type=int, help="Status revisi")
+        parser.add_argument("status", type=int, help="Status revisi", location='args')
         args = parser.parse_args()
 
         user_id = get_jwt_identity()
