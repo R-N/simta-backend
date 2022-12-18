@@ -1,6 +1,6 @@
 # simta-backend
  
-Made with flask and sqlalchemy
+Made with flask and sqlalchemy. By default runs on http://localhost:5000
 
 Requirement:
 - python
