@@ -119,6 +119,7 @@ def get(sidang_id, user_id, penguji=DEFAULT_PENGUJI, ta=DEFAULT_TA, pembimbing=D
 def fetch(user_id=DEFAULT_USER_ID, penguji=DEFAULT_PENGUJI, ta=DEFAULT_TA, pembimbing=DEFAULT_PEMBIMBING, revisi_terakhir=DEFAULT_REVISI_TERAKHIR, mhs=DEFAULT_MHS, pembimbing_dosen=DEFAULT_PEMBIMBING_DOSEN, revisi=DEFAULT_REVISI, form_pomits=DEFAULT_FORM_POMITS, status=None, ta_status=None, ta_type=None, **kwargs):
     if ta_status:
         kwargs["status"] = ta_status
+    if ta_type:
         kwargs["type"] = ta_type
 
     with db.Session() as session:
@@ -128,7 +129,7 @@ def fetch(user_id=DEFAULT_USER_ID, penguji=DEFAULT_PENGUJI, ta=DEFAULT_TA, pembi
         )
         sidang = [t.sidang for t in _ta if t.sidang]
         if status:
-            sidang = [s for s in sidang if s.status == status]
+            sidang = [s for s in sidang if s.status == db.SidangStatus(status)]
         sidang = [postprocess(
             t,
             user_id=user_id,

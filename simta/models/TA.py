@@ -83,10 +83,14 @@ def get(ta_id, user_id, pembimbing=DEFAULT_PEMBIMBING, mhs=DEFAULT_MHS, dosen=DE
     return ta
 
 
-def _fetch(session, mhs_id=None, pembimbing_id=None, penguji_id=None, **kwargs):
+def _fetch(session, type=None, status=None, mhs_id=None, pembimbing_id=None, penguji_id=None, **kwargs):
     stmt = select(db.TA)
     if mhs_id:
         stmt = stmt.filter_by(mhs_id=mhs_id)
+    if type:
+        stmt = stmt.filter_by(type=db.TAType(type))
+    if status:
+        stmt = stmt.filter_by(status=db.TAStatus(status))
     if pembimbing_id:
         stmt = stmt.join(
             db.Pembimbing,
@@ -116,10 +120,12 @@ def _fetch(session, mhs_id=None, pembimbing_id=None, penguji_id=None, **kwargs):
     return ta
 
 
-def fetch(pembimbing=DEFAULT_PEMBIMBING, mhs=DEFAULT_MHS, dosen=DEFAULT_DOSEN, mhs_id=None, pembimbing_id=None, penguji_id=None, **kwargs):
+def fetch(pembimbing=DEFAULT_PEMBIMBING, mhs=DEFAULT_MHS, dosen=DEFAULT_DOSEN, type=None, status=None, mhs_id=None, pembimbing_id=None, penguji_id=None, **kwargs):
     with db.Session() as session:
         ta = _fetch(
             session,
+            type=type,
+            status=status,
             mhs_id=mhs_id,
             pembimbing_id=pembimbing_id,
             penguji_id=penguji_id,
