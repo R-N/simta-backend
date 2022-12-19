@@ -147,6 +147,7 @@ def terima(revisi_id, penguji_id):
         revisi.penguji.status = db.PengujiStatus.ACC
         session.add(revisi.penguji)
 
+        ta = None
         belum_acc = [1 for p in revisi.penguji.sidang.penguji if p.status!=db.PengujiStatus.ACC]
         if not belum_acc:
             revisi.penguji.sidang.status = db.SidangStatus.SELESAI
@@ -172,6 +173,11 @@ def terima(revisi_id, penguji_id):
 
         session.commit()
         session.flush()
+
+        ret = {}
+        if ta:
+            ret["ta_id"] = ta.id
+        return ret
 
 def tolak(revisi_id, penguji_id, detail, file_name=None):
     with db.Session() as session:

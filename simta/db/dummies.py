@@ -12,353 +12,80 @@ from .FormPomits import FormPomits
 from sqlalchemy.sql import functions as funcs
 from simta import util
 
+jenis_ta = [
+    ("Proposal", TAType.PROPOSAL),
+    ("TA", TAType.TA)
+]
+judul_ta = [
+    ("Pembimbing 1", TAStatus.REVISI),
+    ("Pembimbing 2, tanpa form POMITS", TAStatus.REVISI),
+    ("Penguji 1", TAStatus.REVISI),
+    ("Tanpa Hak Akses", TAStatus.REVISI),
+    ("Tanpa Sidang", TAStatus.BARU),
+    ("Belum Isi POMITS", TAStatus.REVISI),
+    ("Belum Isi Nilai", TAStatus.REVISI),
+    ("Tanpa POMITS (S2)", TAStatus.REVISI),
+    ("Untuk Ditolak 1", TAStatus.REVISI),
+    ("Untuk Ditolak 2", TAStatus.REVISI),
+    ("Untuk Ditolak 3", TAStatus.REVISI),
+]
 Lab.dummies = [
     Lab(
-        name="RDIB",
+        name="Lab RDIB",
         short="RDIB"
     ),
     Lab(
-        name="ADDI",
+        name="Lab ADDI",
         short="ADDI"
     )
 ]
 User.dummies = [
-    User(
-        id=1,
-        name="Dosen Satu",
-        username="dosen1",
-        password="dosen",
-        lab_id=1
-    ),
-    User(
-        id=2,
-        name="Dosen Dua",
-        username="dosen2",
-        password="dosen",
-        lab_id=1
-    ),
-    User(
-        id=3,
-        name="Dosen Tiga",
-        username="dosen3",
-        password="dosen",
-        lab_id=1
-    ),
-    User(
-        id=4,
-        name="Dosen Empat",
-        username="dosen4",
-        password="dosen",
-        lab_id=1
-    ),
-    User(
-        id=5,
-        name="Mahasiswa Satu",
-        username="mhs1",
-        password="mhs",
-        lab_id=1
-    ),
-    User(
-        id=6,
-        name="Mahasiswa Dua",
-        username="mhs2",
-        password="mhs",
-        lab_id=1
-    ),
-    User(
-        id=7,
-        name="Mahasiswa Tiga",
-        username="mhs3",
-        password="mhs",
-        lab_id=1
-    ),
-    User(
-        id=8,
-        name="Mahasiswa Empat",
-        username="mhs4",
-        password="mhs",
-        lab_id=1
-    ),
-    User(
-        id=9,
-        name="Mahasiswa Lima",
-        username="mhs5",
-        password="mhs",
-        lab_id=1
-    ),
-    User(
-        id=10,
-        name="Mahasiswa Enam",
-        username="mhs6",
-        password="mhs",
-        lab_id=1
-    ),
-    User(
-        id=11,
-        name="Mahasiswa Tujuh",
-        username="mhs7",
-        password="mhs",
-        lab_id=1
-    ),
-    User(
-        id=12,
-        name="Mahasiswa Delapan",
-        username="mhs8",
-        password="mhs",
-        lab_id=1
-    ),
-    User(
-        id=13,
-        name="Mahasiswa Sembilan",
-        username="mhs9",
-        password="mhs",
-        lab_id=1
-    ),
-    User(
-        id=14,
-        name="Mahasiswa Sepuluh",
-        username="mhs10",
-        password="mhs",
-        lab_id=1
-    ),
-    User(
-        id=15,
-        name="Mahasiswa Sebelas",
-        username="mhs11",
-        password="mhs",
-        lab_id=1
-    ),
-    User(
-        id=16,
-        name="Mahasiswa Dua Belas",
-        username="mhs12",
-        password="mhs",
-        lab_id=1
-    ),
-    User(
-        id=17,
-        name="Mahasiswa Tiga Belas",
-        username="mhs13",
-        password="mhs",
-        lab_id=1
-    ),
-    User(
-        id=18,
-        name="Mahasiswa Empat Belas",
-        username="mhs14",
-        password="mhs",
-        lab_id=1
-    ),
-    User(
-        id=19,
-        name="Mahasiswa Lima Belas (S2)",
-        username="mhs15",
-        password="mhs",
-        lab_id=1
-    ),
+    *[
+        User(
+            name=f"Dosen {i}",
+            username=f"dosen{i}",
+            password="dosen",
+            lab_id=1
+        )
+        for i in range(1, 1+4)
+    ],
+    *[
+        User(
+            name=f"Mahasiswa {i}",
+            username=f"mhs{i}",
+            password="dosen",
+            lab_id=1
+        )
+        for i in range(1, 1+(7*2))
+    ],
 ]
 Dosen.dummies = [
     Dosen(
-        id=1,
-        nip="1231",
-        ttd=True
-    ),
-    Dosen(
-        id=2,
-        nip="1232"
-    ),
-    Dosen(
-        id=3,
-        nip="1233"
-    ),
-    Dosen(
-        id=4,
-        nip="1234"
+        id=i,
+        nip=f"123{i}",
+        ttd=i==1
     )
+    for i in range(1, 1+4)
 ]
 Mahasiswa.dummies = [
     Mahasiswa(
-        id=5,
-        nrp="6026221001",
-        level=MhsLevel.S1
-    ),
-    Mahasiswa(
-        id=6,
-        nrp="6026221002",
-        level=MhsLevel.S1
-    ),
-    Mahasiswa(
-        id=7,
-        nrp="6026221003",
-        level=MhsLevel.S1
-    ),
-    Mahasiswa(
-        id=8,
-        nrp="6026221004",
-        level=MhsLevel.S1
-    ),
-    Mahasiswa(
-        id=9,
-        nrp="6026221005",
-        level=MhsLevel.S1
-    ),
-    Mahasiswa(
-        id=10,
-        nrp="6026221006",
-        level=MhsLevel.S1
-    ),
-    Mahasiswa(
-        id=11,
-        nrp="6026221007",
-        level=MhsLevel.S1
-    ),
-    Mahasiswa(
-        id=12,
-        nrp="6026221008",
-        level=MhsLevel.S1
-    ),
-    Mahasiswa(
-        id=13,
-        nrp="6026221009",
-        level=MhsLevel.S1
-    ),
-    Mahasiswa(
-        id=14,
-        nrp="6026221010",
-        level=MhsLevel.S1
-    ),
-    Mahasiswa(
-        id=15,
-        nrp="6026221011",
-        level=MhsLevel.S1
-    ),
-    Mahasiswa(
-        id=16,
-        nrp="6026221012",
-        level=MhsLevel.S1
-    ),
-    Mahasiswa(
-        id=17,
-        nrp="6026221013",
-        level=MhsLevel.S1
-    ),
-    Mahasiswa(
-        id=18,
-        nrp="6026221014",
-        level=MhsLevel.S1
-    ),
-    Mahasiswa(
-        id=19,
-        nrp="6026221015",
-        level=MhsLevel.S2
-    ),
+        id=1 + 4 + len(judul_ta) * i + j,
+        nrp=f"60262210{1 + len(judul_ta) * i + j}",
+        level=MhsLevel.S2 if j == 7 else MhsLevel.S1
+    )
+    for i in range(len(jenis_ta))
+    for j in range(len(judul_ta))
 ]
 TA.dummies = [
     TA(
-        id=1,
-        mhs_id=5,
-        judul="Proposal Pembimbing 1",
-        type=TAType.PROPOSAL,
-        status=TAStatus.REVISI
-    ),
-    TA(
-        id=2,
-        mhs_id=6,
-        judul="Proposal Pembimbing 2, tanpa form POMITS",
-        type=TAType.PROPOSAL,
-        status=TAStatus.REVISI
-    ),
-    TA(
-        id=3,
-        mhs_id=7,
-        judul="Proposal Penguji 1",
-        type=TAType.PROPOSAL,
-        status=TAStatus.REVISI
-    ),
-    TA(
-        id=4,
-        mhs_id=8,
-        judul="Proposal Tanpa Hak Akses",
-        type=TAType.PROPOSAL,
-        status=TAStatus.REVISI
-    ),
-    TA(
-        id=5,
-        mhs_id=9,
-        judul="Proposal Tanpa Sidang",
-        type=TAType.PROPOSAL,
-        status=TAStatus.BARU
-    ),
-    TA(
-        id=6,
-        mhs_id=11,
-        judul="Proposal Ditolak",
-        type=TAType.PROPOSAL,
-        status=TAStatus.DITOLAK
-    ),
-    TA(
-        id=7,
-        mhs_id=11,
-        judul="Proposal Belum Isi Nilai",
-        type=TAType.PROPOSAL,
-        status=TAStatus.REVISI
-    ),
-    TA(
-        id=8,
-        mhs_id=12,
-        judul="TA Pembimbing 1",
-        type=TAType.TA,
-        status=TAStatus.REVISI
-    ),
-    TA(
-        id=9,
-        mhs_id=13,
-        judul="TA Pembimbing 2, tanpa form POMITS",
-        type=TAType.TA,
-        status=TAStatus.REVISI
-    ),
-    TA(
-        id=10,
-        mhs_id=14,
-        judul="TA Penguji 1",
-        type=TAType.TA,
-        status=TAStatus.REVISI
-    ),
-    TA(
-        id=11,
-        mhs_id=15,
-        judul="TA Tanpa Hak Akses",
-        type=TAType.TA,
-        status=TAStatus.REVISI
-    ),
-    TA(
-        id=12,
-        mhs_id=16,
-        judul="TA Tanpa Sidang",
-        type=TAType.TA,
-        status=TAStatus.BARU
-    ),
-    TA(
-        id=13,
-        mhs_id=17,
-        judul="TA Belum Isi POMITS",
-        type=TAType.TA,
-        status=TAStatus.REVISI
-    ),
-    TA(
-        id=14,
-        mhs_id=18,
-        judul="TA Belum Isi Nilai",
-        type=TAType.TA,
-        status=TAStatus.REVISI
-    ),
-    TA(
-        id=15,
-        mhs_id=19,
-        judul="TA Tanpa POMITS (S2)",
-        type=TAType.TA,
-        status=TAStatus.REVISI
-    ),
+        id=1 + len(judul_ta) * i + j,
+        mhs_id=4 + 1 + len(judul_ta) * i + j,
+        judul=f"{x[0]} {y[0]}",
+        type=x[1],
+        status=y[1]
+    )
+    for i, x in enumerate(jenis_ta)
+    for j, y in enumerate(judul_ta)
 ]
 Pembimbing.dummies = [
     Pembimbing(
@@ -410,140 +137,46 @@ Pembimbing.dummies = [
         status=PembimbingStatus.ACC
     ),
     Pembimbing(
-        id=2,
+        id=1,
         ta_id=9,
         nomor=1,
         status=PembimbingStatus.ACC
     ),
     Pembimbing(
         id=1,
-        ta_id=9,
-        nomor=2,
-        status=PembimbingStatus.ACC
-    ),
-    Pembimbing(
-        id=2,
         ta_id=10,
         nomor=1,
         status=PembimbingStatus.ACC
     ),
     Pembimbing(
         id=1,
-        ta_id=12,
-        nomor=1,
-        status=PembimbingStatus.ACC
-    ),
-    Pembimbing(
-        id=1,
-        ta_id=13,
-        nomor=1,
-        status=PembimbingStatus.ACC
-    ),
-    Pembimbing(
-        id=1,
-        ta_id=14,
-        nomor=1,
-        status=PembimbingStatus.ACC
-    ),
-    Pembimbing(
-        id=1,
-        ta_id=15,
+        ta_id=11,
         nomor=1,
         status=PembimbingStatus.ACC
     ),
 ]
+Pembimbing.dummies = [
+    *[
+        Pembimbing(
+            id=y.id,
+            ta_id=y.ta_id + len(judul_ta) * i,
+            nomor=y.nomor,
+            status=y.status
+        )
+        for i in range(len(jenis_ta))
+        for j, y in enumerate(Pembimbing.dummies)
+    ]
+]
 Sidang.dummies = [
     Sidang(
-        id=1,
+        id=1 + j + len(judul_ta) * i,
         date=funcs.current_date(),
         start=util.parse_time("08:00"),
         end=util.parse_time("10:00"),
         status=SidangStatus.LULUS
-    ),
-    Sidang(
-        id=2,
-        date=funcs.current_date(),
-        start=util.parse_time("08:00"),
-        end=util.parse_time("10:00"),
-        status=SidangStatus.LULUS
-    ),
-    Sidang(
-        id=3,
-        date=funcs.current_date(),
-        start=util.parse_time("08:00"),
-        end=util.parse_time("10:00"),
-        status=SidangStatus.LULUS
-    ),
-    Sidang(
-        id=4,
-        date=funcs.current_date(),
-        start=util.parse_time("08:00"),
-        end=util.parse_time("10:00"),
-        status=SidangStatus.LULUS
-    ),
-    Sidang(
-        id=6,
-        date=funcs.current_date(),
-        start=util.parse_time("08:00"),
-        end=util.parse_time("10:00"),
-        status=SidangStatus.LULUS
-    ),
-    Sidang(
-        id=7,
-        date=funcs.current_date(),
-        start=util.parse_time("08:00"),
-        end=util.parse_time("10:00"),
-        status=SidangStatus.LULUS
-    ),
-    Sidang(
-        id=8,
-        date=funcs.current_date(),
-        start=util.parse_time("08:00"),
-        end=util.parse_time("10:00"),
-        status=SidangStatus.LULUS
-    ),
-    Sidang(
-        id=9,
-        date=funcs.current_date(),
-        start=util.parse_time("08:00"),
-        end=util.parse_time("10:00"),
-        status=SidangStatus.LULUS
-    ),
-    Sidang(
-        id=10,
-        date=funcs.current_date(),
-        start=util.parse_time("08:00"),
-        end=util.parse_time("10:00"),
-        status=SidangStatus.LULUS
-    ),
-    Sidang(
-        id=11,
-        date=funcs.current_date(),
-        start=util.parse_time("08:00"),
-        end=util.parse_time("10:00"),
-        status=SidangStatus.LULUS
-    ),
-    Sidang(
-        id=13,
-        date=funcs.current_date(),
-        start=util.parse_time("08:00"),
-        end=util.parse_time("10:00"),
-        status=SidangStatus.LULUS
-    ),
-    Sidang(
-        id=14,
-        date=funcs.current_date(),
-        start=util.parse_time("08:00"),
-        end=util.parse_time("10:00"),
-        status=SidangStatus.LULUS
-    ),
-    Sidang(
-        id=15,
-        date=funcs.current_date(),
-        start=util.parse_time("08:00"),
-        end=util.parse_time("10:00"),
-        status=SidangStatus.LULUS
-    ),
+    )
+    for i in range(len(jenis_ta))
+    for j in range(len(judul_ta)) if j+1 != 5
 ]
 Penguji.dummies = [
     Penguji(
@@ -606,18 +239,10 @@ Penguji.dummies = [
         nilai=100
     ),
     Penguji(
-        id=2,
-        sidang_id=9,
-        nomor=1,
-        status=PengujiStatus.MENGUJI,
-        nilai=100
-    ),
-    Penguji(
         id=1,
         sidang_id=9,
-        nomor=2,
-        status=PengujiStatus.MENGUJI,
-        nilai=100
+        nomor=1,
+        status=PengujiStatus.MENGUJI
     ),
     Penguji(
         id=1,
@@ -626,37 +251,24 @@ Penguji.dummies = [
         status=PengujiStatus.MENGUJI
     ),
     Penguji(
-        id=2,
-        sidang_id=10,
-        nomor=2,
-        status=PengujiStatus.MENGUJI
-    ),
-    Penguji(
-        id=2,
+        id=1,
         sidang_id=11,
         nomor=1,
         status=PengujiStatus.MENGUJI
-    ),
-    Penguji(
-        id=1,
-        sidang_id=13,
-        nomor=1,
-        status=PengujiStatus.MENGUJI,
-        nilai=100
-    ),
-    Penguji(
-        id=1,
-        sidang_id=14,
-        nomor=1,
-        status=PengujiStatus.MENGUJI
-    ),
-    Penguji(
-        id=1,
-        sidang_id=15,
-        nomor=1,
-        status=PengujiStatus.MENGUJI,
-        nilai=100
-    ),
+    )
+]
+Penguji.dummies = [
+    *[
+        Penguji(
+            id=y.id,
+            sidang_id=y.sidang_id + len(judul_ta) * i,
+            nomor=y.nomor,
+            status=y.status,
+            nilai=y.nilai
+        )
+        for i in range(len(jenis_ta))
+        for j, y in enumerate(Penguji.dummies)
+    ]
 ]
 Revisi.dummies = [
     Revisi(
@@ -734,16 +346,16 @@ Revisi.dummies = [
         sidang_id=8,
         penguji_id=1,
         nomor=1,
-        status=RevisiStatus.DITOLAK,
+        status=RevisiStatus.BARU,
         created_at=funcs.now(),
         file_name="asdf.pdf",
         detail=""
     ),
     Revisi(
         id=9,
-        sidang_id=8,
+        sidang_id=9,
         penguji_id=1,
-        nomor=2,
+        nomor=1,
         status=RevisiStatus.BARU,
         created_at=funcs.now(),
         file_name="asdf.pdf",
@@ -751,26 +363,6 @@ Revisi.dummies = [
     ),
     Revisi(
         id=10,
-        sidang_id=9,
-        penguji_id=1,
-        nomor=1,
-        status=RevisiStatus.BARU,
-        created_at=funcs.now(),
-        file_name="asdf.pdf",
-        detail=""
-    ),
-    Revisi(
-        id=11,
-        sidang_id=9,
-        penguji_id=2,
-        nomor=1,
-        status=RevisiStatus.BARU,
-        created_at=funcs.now(),
-        file_name="asdf.pdf",
-        detail=""
-    ),
-    Revisi(
-        id=12,
         sidang_id=10,
         penguji_id=1,
         nomor=1,
@@ -780,8 +372,8 @@ Revisi.dummies = [
         detail=""
     ),
     Revisi(
-        id=13,
-        sidang_id=13,
+        id=11,
+        sidang_id=11,
         penguji_id=1,
         nomor=1,
         status=RevisiStatus.BARU,
@@ -789,67 +381,81 @@ Revisi.dummies = [
         file_name="asdf.pdf",
         detail=""
     ),
-    Revisi(
-        id=14,
-        sidang_id=14,
-        penguji_id=1,
-        nomor=1,
-        status=RevisiStatus.BARU,
-        created_at=funcs.now(),
-        file_name="asdf.pdf",
-        detail=""
-    ),
-    Revisi(
-        id=15,
-        sidang_id=15,
-        penguji_id=1,
-        nomor=1,
-        status=RevisiStatus.BARU,
-        created_at=funcs.now(),
-        file_name="asdf.pdf",
-        detail=""
-    ),
+]
+Revisi.dummies = [
+    *[
+        Revisi(
+            id=y.id + len(Revisi.dummies) * i,
+            sidang_id=y.sidang_id + len(judul_ta) * i,
+            penguji_id=y.penguji_id,
+            nomor=y.nomor,
+            status=y.status,
+            created_at=y.created_at,
+            file_name=y.file_name,
+            detail=y.detail
+        )
+        for i in range(len(jenis_ta))
+        for j, y in enumerate(Revisi.dummies)
+    ]
 ]
 PenolakanRevisi.dummies = [
     PenolakanRevisi(
         id=1,
         detail="Metode kurang relevan",
         file_name="rev.pdf"
-    ),
-    PenolakanRevisi(
-        id=8,
-        detail="Metode kurang relevan",
-        file_name="rev.pdf"
     )
+]
+PenolakanRevisi.dummies = [
+    *[
+        PenolakanRevisi(
+            id=y.id + len(judul_ta) * i,
+            detail=y.detail,
+            file_name=y.file_name
+        )
+        for i in range(len(jenis_ta))
+        for j, y in enumerate(PenolakanRevisi.dummies)
+    ]
 ]
 FormPomits.dummies = [
     FormPomits(
-        id=8,
+        id=1,
         check_1=True,
         check_2=True,
         check_3=False
     ),
     FormPomits(
-        id=9,
+        id=2,
         check_1=True,
         check_2=True,
         check_3=False
     ),
     FormPomits(
-        id=11,
+        id=4,
         check_1=True,
         check_2=True,
         check_3=False
     ),
     FormPomits(
-        id=13,
+        id=6,
     ),
     FormPomits(
-        id=14,
+        id=7,
         check_1=True,
         check_2=True,
         check_3=False
     ),
+]
+FormPomits.dummies = [
+    *[
+        FormPomits(
+            id=y.id + len(judul_ta) * i,
+            check_1=y.check_1,
+            check_2=y.check_2,
+            check_3=y.check_3
+        )
+        for i in range(len(jenis_ta))
+        for j, y in enumerate(FormPomits.dummies)
+    ]
 ]
 
 dummies = [

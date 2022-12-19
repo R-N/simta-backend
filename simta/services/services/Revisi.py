@@ -10,8 +10,9 @@ bp = Blueprint('revisi', __name__, url_prefix='/revisi')
 def terima(revisi_id):
     user_id = get_jwt_identity()
     try:
-        models.Revisi.terima(revisi_id, user_id)
-        return {"result": "success"}
+        ret = models.Revisi.terima(revisi_id, user_id)
+        ret["result"] = "success"
+        return ret
     except Error as ex:
         return {"message": ex.message}, ex.code
 
