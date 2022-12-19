@@ -292,6 +292,7 @@ Revisi.dummies = [
         nomor=1,
         status=RevisiStatus.DITOLAK,
         created_at=funcs.now(),
+        updated_at=funcs.now(),
         file_name="asdf.pdf",
         detail=""
     ),
@@ -402,6 +403,7 @@ Revisi.dummies = [
         nomor=1,
         status=RevisiStatus.DITOLAK,
         created_at=funcs.now(),
+        updated_at=funcs.now(),
         file_name="asdf.pdf",
         detail=""
     ),

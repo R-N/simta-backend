@@ -3,6 +3,7 @@ from simta.classes import Error
 from simta import db, util, models
 import os
 from flask import send_from_directory
+from sqlalchemy.sql import functions as funcs
 
 allowed_fields = {
     "id", "sidang_id", "penguji_id", "nomor", "status", "created_at", "updated_at", "file_name", "detail"
@@ -144,6 +145,7 @@ def terima(revisi_id, penguji_id):
             raise Error("Anda belum upload tanda tangan", 403)
 
         revisi.status = db.RevisiStatus.DITERIMA
+        revisi.updated_at = funcs.now()
         session.add(revisi)
 
         revisi.penguji.status = db.PengujiStatus.ACC
@@ -205,6 +207,7 @@ def tolak(revisi_id, penguji_id, detail, file_name=None):
             session.add(penolakan)
 
         revisi.status = db.RevisiStatus.DITOLAK
+        revisi.updated_at = funcs.now()
         session.add(revisi)
 
         session.commit()
