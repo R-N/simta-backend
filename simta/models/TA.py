@@ -36,12 +36,10 @@ def postprocess(ta, pembimbing=DEFAULT_PEMBIMBING, mhs=DEFAULT_MHS, dosen=DEFAUL
     if mhs:
         mhs = ta.mhs
 
-    print("TA", ta.id, ta.mhs_id, ta.mhs)
     ta = util.filter_obj_dict(ta, allowed_fields)
     util.resolve_enums(ta, enums)
 
     if mhs:
-        print("mhs", mhs)
         mhs = models.Mahasiswa.postprocess(mhs)
         ta["mhs"] = mhs
 

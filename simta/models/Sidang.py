@@ -126,7 +126,7 @@ def fetch(user_id=DEFAULT_USER_ID, penguji=DEFAULT_PENGUJI, ta=DEFAULT_TA, pembi
             session,
             **kwargs
         )
-        sidang = [t.sidang for t in _ta]
+        sidang = [t.sidang for t in _ta if t.sidang]
         if status:
             sidang = [s for s in sidang if s.status == status]
         sidang = [postprocess(
