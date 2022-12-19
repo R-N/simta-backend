@@ -2,6 +2,8 @@
  
 Made with flask and sqlalchemy. By default runs on http://localhost:5000
 
+Sample deployment: https://linearch.pythonanywhere.com/
+
 Requirement:
 - python
 
