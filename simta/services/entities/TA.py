@@ -7,8 +7,9 @@ from simta.classes import Error
 class TA(Resource):
     @jwt_required()
     def get(self, ta_id):
+        user_id = get_jwt_identity()
         try:
-            return models.TA.get(ta_id)
+            return models.TA.get(ta_id, user_id)
         except Error as ex:
             return {"message": ex.message}, ex.code
 

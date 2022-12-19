@@ -60,7 +60,7 @@ def postprocess(ta, pembimbing=DEFAULT_PEMBIMBING, mhs=DEFAULT_MHS, dosen=DEFAUL
     return ta
 
 
-def get(ta_id, pembimbing=DEFAULT_PEMBIMBING, mhs=DEFAULT_MHS, dosen=DEFAULT_DOSEN, **kwargs):
+def get(ta_id, user_id, pembimbing=DEFAULT_PEMBIMBING, mhs=DEFAULT_MHS, dosen=DEFAULT_DOSEN, **kwargs):
     with db.Session() as session:
         stmt = select(db.TA)
         stmt = stmt.filter_by(id=ta_id)
@@ -69,6 +69,9 @@ def get(ta_id, pembimbing=DEFAULT_PEMBIMBING, mhs=DEFAULT_MHS, dosen=DEFAULT_DOS
 
         if not ta:
             raise Error("TA not found", 404)
+
+        if user_id != ta.mhs.id and user_id not in {p.id for p in ta.pembimbing} and not (ta.sidang and user_id in {p.id for p in ta.sidang.penguji}):
+            raise Error("Anda tidak berhak mengakses TA ini", 401)
 
         ta = postprocess(
             ta,

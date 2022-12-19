@@ -35,7 +35,7 @@ def postprocess(form_pomits, sidang=DEFAULT_SIDANG, penguji=DEFAULT_PENGUJI, ta=
     return form_pomits
 
 
-def get(sidang_id, penguji=DEFAULT_PENGUJI, ta=DEFAULT_TA, pembimbing=DEFAULT_PEMBIMBING, revisi_terakhir=DEFAULT_REVISI_TERAKHIR, mhs=DEFAULT_MHS, **kwargs):
+def get(sidang_id, user_id, penguji=DEFAULT_PENGUJI, ta=DEFAULT_TA, pembimbing=DEFAULT_PEMBIMBING, revisi_terakhir=DEFAULT_REVISI_TERAKHIR, mhs=DEFAULT_MHS, **kwargs):
     with db.Session() as session:
         stmt = select(db.FormPomits)
         stmt = stmt.filter_by(id=sidang_id)
@@ -44,6 +44,9 @@ def get(sidang_id, penguji=DEFAULT_PENGUJI, ta=DEFAULT_TA, pembimbing=DEFAULT_PE
 
         if not form_pomits:
             raise Error("Form POMITS not found", 404)
+
+        if user_id != form_pomits.sidang.ta.mhs.id and user_id not in {p.id for p in form_pomits.sidang.ta.pembimbing} and user_id not in {p.id for p in form_pomits.sidang.penguji}:
+            raise Error("Anda tidak berhak mengakses Form POMITS ini", 401)
 
         form_pomits = postprocess(
             form_pomits,

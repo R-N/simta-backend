@@ -30,7 +30,9 @@ def create_app(test_config=None):
     init_dummy()
 
     from simta.services.entities import User
+    from simta.services.services import Revisi
     app.register_blueprint(User.bp)
+    app.register_blueprint(Revisi.bp)
 
     jwt = JWTManager(app)
 

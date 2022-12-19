@@ -7,20 +7,19 @@ from simta.classes import Error
 class Revisi(Resource):
     @jwt_required()
     def get(self, revisi_id):
+        user_id = get_jwt_identity()
         try:
-            return models.Revisi.get(revisi_id)
+            return models.Revisi.get(revisi_id, user_id)
         except Error as ex:
             return {"message": ex.message}, ex.code
 
 class RevisiList(Resource):
     @jwt_required()
     def get(self, sidang_id):
+        user_id = get_jwt_identity()
         parser = reqparse.RequestParser()
         parser.add_argument("status", type=int, help="Status revisi", location='args')
         args = parser.parse_args()
-
-        user_id = get_jwt_identity()
-
         try:
             return models.Revisi.fetch(sidang_id, user_id, **args)
         except Error as ex:

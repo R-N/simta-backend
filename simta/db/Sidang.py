@@ -10,8 +10,8 @@ from .Base import Base
 class SidangStatus(enum.Enum):
     BARU = 1
     FIX = 2
-    SELESAI = 3
-    LULUS = 4
+    LULUS = 3
+    SELESAI = 4
     MENGULANG = 5
 
 class Sidang(Base):

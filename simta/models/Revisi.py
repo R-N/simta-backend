@@ -53,16 +53,24 @@ def postprocess(revisi, sidang=DEFAULT_SIDANG, penguji=DEFAULT_PENGUJI, penolaka
 
     return revisi
 
+def _get(session, revisi_id, user_id):
+    stmt = select(db.Revisi)
+    stmt = stmt.filter_by(id=revisi_id)
 
-def get(revisi_id, sidang=DEFAULT_SIDANG, penguji=DEFAULT_PENGUJI, penolakan=DEFAULT_PENOLAKAN, ta=DEFAULT_TA, pembimbing=DEFAULT_PEMBIMBING, mhs=DEFAULT_MHS, revisi_terakhir=DEFAULT_REVISI_TERAKHIR, **kwargs):
+    revisi = session.scalars(stmt).first()
+
+    if not revisi:
+        raise Error("Revisi not found", 404)
+
+    if revisi.penguji.id != user_id and revisi.penguji.sidang.ta.mhs.id != user_id:
+        raise Error("Anda tidak berhak mengakses revisi ini", 401)
+
+    return revisi
+
+
+def get(revisi_id, user_id, sidang=DEFAULT_SIDANG, penguji=DEFAULT_PENGUJI, penolakan=DEFAULT_PENOLAKAN, ta=DEFAULT_TA, pembimbing=DEFAULT_PEMBIMBING, mhs=DEFAULT_MHS, revisi_terakhir=DEFAULT_REVISI_TERAKHIR, **kwargs):
     with db.Session() as session:
-        stmt = select(db.Revisi)
-        stmt = stmt.filter_by(id=revisi_id)
-
-        revisi = session.scalars(stmt).first()
-
-        if not revisi:
-            raise Error("Revisi not found", 404)
+        revisi = _get(session, revisi_id, user_id)
 
         revisi = postprocess(
             revisi, 
@@ -116,3 +124,56 @@ def fetch(sidang_id, penguji_id, penguji=DEFAULT_PENGUJI, penolakan=DEFAULT_PENO
     if status:
         sidang["revisi"] = [r for r in sidang["revisi"] if r==status]
     return sidang
+
+def terima(revisi_id, penguji_id):
+    with db.Session() as session:
+        revisi = _get(session, revisi_id, penguji_id)
+
+        if revisi.status != db.RevisiStatus.BARU and revisi.status != db.RevisiStatus.DILIHAT:
+            raise Error("Anda sudah menerima/menolak revisi ini", 403)
+        
+        if revisi.penguji.nilai is None:
+            raise Error("Anda belum mengisi nilai", 403)
+        
+        if revisi.penguji.nomor == 1 and revisi.penguji.sidang.ta.mhs.level == db.MhsLevel.S1 and (revisi.penguji.sidang.form_pomits is None or not revisi.penguji.sidang.form_pomits.is_filled):
+            raise Error("Anda belum mengisi form POMITS", 403)
+        
+        if not revisi.penguji.dosen.ttd:
+            raise Error("Anda belum upload tanda tangan", 403)
+
+        revisi.status = db.RevisiStatus.DITERIMA
+        session.add(revisi)
+
+        revisi.penguji.status = db.PengujiStatus.ACC
+        session.add(revisi.penguji)
+
+        belum_acc = [1 for p in revisi.penguji.sidang.penguji if p.status!=db.PengujiStatus.ACC]
+        if not belum_acc:
+            revisi.penguji.sidang.status = db.SidangStatus.SELESAI
+            session.add(revisi.penguji.sidang)
+
+        session.commit()
+        session.flush()
+
+def tolak(revisi_id, penguji_id, detail, file_name=None):
+    with db.Session() as session:
+        revisi = _get(session, revisi_id, penguji_id)
+
+        if revisi.penolakan:
+            revisi.penolakan.detail = detail
+            if file_name:
+                revisi.penolakan.file_name = file_name
+            session.add(revisi.penolakan)
+        else:
+            penolakan = db.PenolakanRevisi(
+                id=revisi.id,
+                detail=detail,
+                file_name=file_name
+            )
+            session.add(penolakan)
+
+        revisi.status = db.RevisiStatus.DITOLAK
+        session.add(revisi)
+
+        session.commit()
+        session.flush()
