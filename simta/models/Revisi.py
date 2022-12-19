@@ -23,6 +23,8 @@ DEFAULT_TA = True
 DEFAULT_MHS = True
 DEFAULT_REVISI_TERAKHIR = False
 
+DIR_FILE_PENOLAKAN = os.path.abspath("./simta/assets/files/penolakan_revisi")
+DIR_FILE_REVISI = os.path.abspath("./simta/assets/files/revisi")
 
 def apply_filters(stmt, **kwargs):
     return util.apply_filters(stmt, allowed_filters, kwargs)
@@ -213,7 +215,6 @@ def tolak(revisi_id, penguji_id, detail, file_name=None):
         session.commit()
         session.flush()
 
-DIR_FILE_PENOLAKAN = os.path.abspath("./simta/assets/files/penolakan_revisi")
 
 def upload_file_penolakan(revisi_id, file, penguji_id):
     with db.Session() as session:
@@ -239,3 +240,14 @@ def download_file_penolakan(revisi_id, penguji_id):
             raise Error("File penolakan hilang", 404)
 
         return send_from_directory(directory=models.Revisi.DIR_FILE_PENOLAKAN, path=file_name, as_attachment=True)
+
+        
+def download_file_revisi(revisi_id, penguji_id):
+    with db.Session() as session:
+        revisi = _get(session, revisi_id, penguji_id)
+
+        file_name = f"{revisi_id}.pdf"
+        if revisi.file_name and not os.path.isfile(os.path.join(DIR_FILE_REVISI, file_name)):
+            raise Error("File revisi hilang", 404)
+
+        return send_from_directory(directory=models.Revisi.DIR_FILE_REVISI, path=file_name, as_attachment=True)

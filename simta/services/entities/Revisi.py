@@ -38,6 +38,14 @@ class FilePenolakanRevisi(Resource):
         except Error as ex:
             return {"message": ex.message}, ex.code
 
+class FileRevisi(Resource):
+    @jwt_required()
+    def get(self, revisi_id):
+        user_id = get_jwt_identity()
+        try:
+            return models.Revisi.download_file_revisi(revisi_id, user_id)
+        except Error as ex:
+            return {"message": ex.message}, ex.code
 
 class RevisiList(Resource):
     @jwt_required()
