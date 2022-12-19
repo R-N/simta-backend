@@ -36,16 +36,16 @@ def tolak(revisi_id):
 
 @bp.route('/<int:revisi_id>/tolak/upload', methods=('PUT',))
 @jwt_required()
-def upload_feedback_penolakan(revisi_id):
+def upload_file_penolakan(revisi_id):
     user_id = get_jwt_identity()
     parse = reqparse.RequestParser()
     parse.add_argument('file', type=FileStorage, location='files')
     args = parse.parse_args()
     file = args['file'] if "file" in args else None
-
+    if not file:
+        return {"result": "Must provide file"}, 400
     try:
-        if file:
-            file.save(f"assets/files/penolakan_revisi/{revisi_id}.pdf")
+        models.Revisi.upload_file_penolakan(revisi_id, file, user_id)
         return {"result": "success"}
     except Error as ex:
         return {"message": ex.message}, ex.code

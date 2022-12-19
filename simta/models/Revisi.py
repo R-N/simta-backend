@@ -204,3 +204,12 @@ def tolak(revisi_id, penguji_id, detail, file_name=None):
 
         session.commit()
         session.flush()
+
+def upload_file_penolakan(revisi_id, file, penguji_id):
+    with db.Session() as session:
+        revisi = _get(session, revisi_id, penguji_id)
+
+        if revisi.status != db.RevisiStatus.BARU and revisi.status != db.RevisiStatus.DILIHAT:
+            raise Error("Anda sudah menerima/menolak revisi ini", 403)
+
+        file.save(f"./simta/assets/files/penolakan_revisi/{revisi_id}.pdf")
