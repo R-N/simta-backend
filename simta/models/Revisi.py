@@ -135,7 +135,7 @@ def terima(revisi_id, penguji_id):
         if revisi.penguji.nilai is None:
             raise Error("Anda belum mengisi nilai", 403)
         
-        if revisi.penguji.nomor == 1 and revisi.penguji.sidang.ta.mhs.level == db.MhsLevel.S1 and (revisi.penguji.sidang.form_pomits is None or not revisi.penguji.sidang.form_pomits.is_filled):
+        if revisi.penguji.nomor == 1 and revisi.penguji.sidang.ta.type==db.TAType.TA and revisi.penguji.sidang.ta.mhs.level == db.MhsLevel.S1 and (revisi.penguji.sidang.form_pomits is None or not revisi.penguji.sidang.form_pomits.is_filled):
             raise Error("Anda belum mengisi form POMITS", 403)
         
         if not revisi.penguji.dosen.ttd:
@@ -151,6 +151,24 @@ def terima(revisi_id, penguji_id):
         if not belum_acc:
             revisi.penguji.sidang.status = db.SidangStatus.SELESAI
             session.add(revisi.penguji.sidang)
+
+            if revisi.penguji.sidang.ta.type == db.TAType.PROPOSAL:
+                sidang = revisi.penguji.sidang
+                ta = db.TA(
+                    mhs_id=sidang.ta.mhs.id,
+                    judul=sidang.ta.judul,
+                    type=db.TAType.TA,
+                    status=db.TAStatus.BIMBINGAN
+                )
+                session.add(ta)
+                for p in sidang.ta.pembimbing:
+                    p2 = db.Pembimbing(
+                        id=p.id,
+                        ta=ta,
+                        nomor=p.nomor,
+                        status=db.PembimbingStatus.BIMBINGAN
+                    )
+                    session.add(p2)
 
         session.commit()
         session.flush()

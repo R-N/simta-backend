@@ -24,68 +24,128 @@ Lab.dummies = [
 ]
 User.dummies = [
     User(
+        id=1,
         name="Dosen Satu",
         username="dosen1",
         password="dosen",
         lab_id=1
     ),
     User(
+        id=2,
         name="Dosen Dua",
         username="dosen2",
         password="dosen",
         lab_id=1
     ),
     User(
+        id=3,
         name="Dosen Tiga",
         username="dosen3",
         password="dosen",
         lab_id=1
     ),
     User(
+        id=4,
         name="Dosen Empat",
         username="dosen4",
         password="dosen",
         lab_id=1
     ),
     User(
+        id=5,
         name="Mahasiswa Satu",
         username="mhs1",
         password="mhs",
         lab_id=1
     ),
     User(
+        id=6,
         name="Mahasiswa Dua",
         username="mhs2",
         password="mhs",
         lab_id=1
     ),
     User(
+        id=7,
         name="Mahasiswa Tiga",
         username="mhs3",
         password="mhs",
         lab_id=1
     ),
     User(
+        id=8,
         name="Mahasiswa Empat",
         username="mhs4",
         password="mhs",
         lab_id=1
     ),
     User(
+        id=9,
         name="Mahasiswa Lima",
         username="mhs5",
         password="mhs",
         lab_id=1
     ),
     User(
+        id=10,
         name="Mahasiswa Enam",
         username="mhs6",
         password="mhs",
         lab_id=1
     ),
     User(
+        id=11,
         name="Mahasiswa Tujuh",
         username="mhs7",
+        password="mhs",
+        lab_id=1
+    ),
+    User(
+        id=12,
+        name="Mahasiswa Delapan",
+        username="mhs8",
+        password="mhs",
+        lab_id=1
+    ),
+    User(
+        id=13,
+        name="Mahasiswa Sembilan",
+        username="mhs9",
+        password="mhs",
+        lab_id=1
+    ),
+    User(
+        id=14,
+        name="Mahasiswa Sepuluh",
+        username="mhs10",
+        password="mhs",
+        lab_id=1
+    ),
+    User(
+        id=15,
+        name="Mahasiswa Sebelas",
+        username="mhs11",
+        password="mhs",
+        lab_id=1
+    ),
+    User(
+        id=16,
+        name="Mahasiswa Dua Belas",
+        username="mhs12",
+        password="mhs",
+        lab_id=1
+    ),
+    User(
+        id=17,
+        name="Mahasiswa Tiga Belas",
+        username="mhs13",
+        password="mhs",
+        lab_id=1
+    ),
+    User(
+        id=18,
+        name="Mahasiswa Empat Belas",
+        username="mhs14",
         password="mhs",
         lab_id=1
     ),
@@ -145,48 +205,139 @@ Mahasiswa.dummies = [
         nrp="6026221007",
         level=MhsLevel.S1
     ),
+    Mahasiswa(
+        id=12,
+        nrp="6026221008",
+        level=MhsLevel.S1
+    ),
+    Mahasiswa(
+        id=13,
+        nrp="6026221009",
+        level=MhsLevel.S1
+    ),
+    Mahasiswa(
+        id=14,
+        nrp="6026221010",
+        level=MhsLevel.S1
+    ),
+    Mahasiswa(
+        id=15,
+        nrp="6026221011",
+        level=MhsLevel.S1
+    ),
+    Mahasiswa(
+        id=16,
+        nrp="6026221012",
+        level=MhsLevel.S1
+    ),
+    Mahasiswa(
+        id=17,
+        nrp="6026221013",
+        level=MhsLevel.S1
+    ),
+    Mahasiswa(
+        id=18,
+        nrp="6026221014",
+        level=MhsLevel.S1
+    ),
 ]
 TA.dummies = [
     TA(
+        id=1,
         mhs_id=5,
         judul="Proposal Pembimbing 1",
         type=TAType.PROPOSAL,
         status=TAStatus.REVISI
     ),
     TA(
+        id=2,
         mhs_id=6,
         judul="Proposal Pembimbing 2, tanpa form POMITS",
         type=TAType.PROPOSAL,
         status=TAStatus.REVISI
     ),
     TA(
+        id=3,
         mhs_id=7,
         judul="Proposal Penguji 1",
         type=TAType.PROPOSAL,
         status=TAStatus.REVISI
     ),
     TA(
+        id=4,
         mhs_id=8,
         judul="Proposal Tanpa Hak Akses",
         type=TAType.PROPOSAL,
         status=TAStatus.REVISI
     ),
     TA(
+        id=5,
         mhs_id=9,
         judul="Proposal Tanpa Sidang",
         type=TAType.PROPOSAL,
         status=TAStatus.BARU
     ),
     TA(
-        mhs_id=10,
-        judul="Proposal Belum Isi POMITS",
+        id=6,
+        mhs_id=11,
+        judul="Proposal Ditolak",
+        type=TAType.PROPOSAL,
+        status=TAStatus.DITOLAK
+    ),
+    TA(
+        id=7,
+        mhs_id=11,
+        judul="Proposal Belum Isi Nilai",
         type=TAType.PROPOSAL,
         status=TAStatus.REVISI
     ),
     TA(
-        mhs_id=11,
-        judul="Proposal Belum Isi Nilai",
-        type=TAType.PROPOSAL,
+        id=8,
+        mhs_id=12,
+        judul="TA Pembimbing 1",
+        type=TAType.TA,
+        status=TAStatus.REVISI
+    ),
+    TA(
+        id=9,
+        mhs_id=13,
+        judul="TA Pembimbing 2, tanpa form POMITS",
+        type=TAType.TA,
+        status=TAStatus.REVISI
+    ),
+    TA(
+        id=10,
+        mhs_id=14,
+        judul="TA Penguji 1",
+        type=TAType.TA,
+        status=TAStatus.REVISI
+    ),
+    TA(
+        id=11,
+        mhs_id=15,
+        judul="TA Tanpa Hak Akses",
+        type=TAType.TA,
+        status=TAStatus.REVISI
+    ),
+    TA(
+        id=12,
+        mhs_id=16,
+        judul="TA Tanpa Sidang",
+        type=TAType.TA,
+        status=TAStatus.BARU
+    ),
+    TA(
+        id=13,
+        mhs_id=17,
+        judul="TA Belum Isi POMITS",
+        type=TAType.TA,
+        status=TAStatus.REVISI
+    ),
+    TA(
+        id=14,
+        mhs_id=18,
+        judul="TA Belum Isi Nilai",
+        type=TAType.TA,
         status=TAStatus.REVISI
     ),
 ]
@@ -334,6 +485,7 @@ Penguji.dummies = [
 ]
 Revisi.dummies = [
     Revisi(
+        id=1,
         sidang_id=1,
         penguji_id=1,
         nomor=1,
@@ -343,6 +495,7 @@ Revisi.dummies = [
         detail=""
     ),
     Revisi(
+        id=2,
         sidang_id=1,
         penguji_id=1,
         nomor=2,
@@ -352,6 +505,7 @@ Revisi.dummies = [
         detail=""
     ),
     Revisi(
+        id=3,
         sidang_id=2,
         penguji_id=1,
         nomor=1,
@@ -361,6 +515,7 @@ Revisi.dummies = [
         detail=""
     ),
     Revisi(
+        id=4,
         sidang_id=2,
         penguji_id=2,
         nomor=1,
@@ -370,6 +525,7 @@ Revisi.dummies = [
         detail=""
     ),
     Revisi(
+        id=5,
         sidang_id=3,
         penguji_id=1,
         nomor=1,
@@ -379,6 +535,7 @@ Revisi.dummies = [
         detail=""
     ),
     Revisi(
+        id=6,
         sidang_id=6,
         penguji_id=1,
         nomor=1,
@@ -388,6 +545,7 @@ Revisi.dummies = [
         detail=""
     ),
     Revisi(
+        id=7,
         sidang_id=7,
         penguji_id=1,
         nomor=1,
