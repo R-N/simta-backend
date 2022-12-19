@@ -156,8 +156,12 @@ def terima(revisi_id, penguji_id):
         ta = None
         belum_acc = [1 for p in revisi.penguji.sidang.penguji if p.status!=db.PengujiStatus.ACC]
         if not belum_acc:
-            revisi.penguji.sidang.status = db.SidangStatus.SELESAI
-            session.add(revisi.penguji.sidang)
+            if revisi.penguji.sidang.status != db.SidangStatus.SELESAI:
+                revisi.penguji.sidang.status = db.SidangStatus.SELESAI
+                session.add(revisi.penguji.sidang)
+            if revisi.penguji.sidang.ta.status != db.TAStatus.SELESAI:
+                revisi.penguji.sidang.ta.status = db.TAStatus.SELESAI
+                session.add(revisi.penguji.sidang.ta)
 
             if revisi.penguji.sidang.ta.type == db.TAType.PROPOSAL:
                 sidang = revisi.penguji.sidang
