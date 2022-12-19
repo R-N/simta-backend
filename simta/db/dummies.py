@@ -51,13 +51,14 @@ User.dummies = [
     ],
     *[
         User(
-            name=f"Mahasiswa {i}",
-            username=f"mhs{i}",
+            name=f"Mahasiswa {1 + len(judul_ta) * i + j}",
+            username=f"mhs{1 + len(judul_ta) * i + j}",
             password="dosen",
             lab_id=1
         )
-        for i in range(1, 1+(7*2))
-    ],
+        for i in range(len(jenis_ta))
+        for j in range(len(judul_ta))
+    ]
 ]
 Dosen.dummies = [
     Dosen(

@@ -14,7 +14,7 @@ class PenolakanRevisi(Base):
     #sidang_id = Column("Sidang_Id", Integer, primary_key=True)
     #penguji_id = Column("Penguji_Id", Integer, primary_key=True)
     #nomor = Column("Nomor", Integer, default=1, primary_key=True)
-    file_name = Column("File_Name", String(32), nullable=False)
+    file_name = Column("File_Name", String(32))
     detail = Column("Detail", String(256), nullable=False)
 
     #__table_args__ = (

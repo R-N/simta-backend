@@ -183,6 +183,9 @@ def tolak(revisi_id, penguji_id, detail, file_name=None):
     with db.Session() as session:
         revisi = _get(session, revisi_id, penguji_id)
 
+        if revisi.status != db.RevisiStatus.BARU and revisi.status != db.RevisiStatus.DILIHAT:
+            raise Error("Anda sudah menerima/menolak revisi ini", 403)
+
         if revisi.penolakan:
             revisi.penolakan.detail = detail
             if file_name:
