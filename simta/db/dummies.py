@@ -149,6 +149,13 @@ User.dummies = [
         password="mhs",
         lab_id=1
     ),
+    User(
+        id=19,
+        name="Mahasiswa Lima Belas (S2)",
+        username="mhs15",
+        password="mhs",
+        lab_id=1
+    ),
 ]
 Dosen.dummies = [
     Dosen(
@@ -239,6 +246,11 @@ Mahasiswa.dummies = [
         id=18,
         nrp="6026221014",
         level=MhsLevel.S1
+    ),
+    Mahasiswa(
+        id=19,
+        nrp="6026221015",
+        level=MhsLevel.S2
     ),
 ]
 TA.dummies = [
@@ -340,6 +352,13 @@ TA.dummies = [
         type=TAType.TA,
         status=TAStatus.REVISI
     ),
+    TA(
+        id=15,
+        mhs_id=19,
+        judul="TA Tanpa POMITS (S2)",
+        type=TAType.TA,
+        status=TAStatus.REVISI
+    ),
 ]
 Pembimbing.dummies = [
     Pembimbing(
@@ -384,6 +403,54 @@ Pembimbing.dummies = [
         nomor=1,
         status=PembimbingStatus.ACC
     ),
+    Pembimbing(
+        id=1,
+        ta_id=8,
+        nomor=1,
+        status=PembimbingStatus.ACC
+    ),
+    Pembimbing(
+        id=2,
+        ta_id=9,
+        nomor=1,
+        status=PembimbingStatus.ACC
+    ),
+    Pembimbing(
+        id=1,
+        ta_id=9,
+        nomor=2,
+        status=PembimbingStatus.ACC
+    ),
+    Pembimbing(
+        id=2,
+        ta_id=10,
+        nomor=1,
+        status=PembimbingStatus.ACC
+    ),
+    Pembimbing(
+        id=1,
+        ta_id=12,
+        nomor=1,
+        status=PembimbingStatus.ACC
+    ),
+    Pembimbing(
+        id=1,
+        ta_id=13,
+        nomor=1,
+        status=PembimbingStatus.ACC
+    ),
+    Pembimbing(
+        id=1,
+        ta_id=14,
+        nomor=1,
+        status=PembimbingStatus.ACC
+    ),
+    Pembimbing(
+        id=1,
+        ta_id=15,
+        nomor=1,
+        status=PembimbingStatus.ACC
+    ),
 ]
 Sidang.dummies = [
     Sidang(
@@ -423,6 +490,55 @@ Sidang.dummies = [
     ),
     Sidang(
         id=7,
+        date=funcs.current_date(),
+        start=util.parse_time("08:00"),
+        end=util.parse_time("10:00"),
+        status=SidangStatus.LULUS
+    ),
+    Sidang(
+        id=8,
+        date=funcs.current_date(),
+        start=util.parse_time("08:00"),
+        end=util.parse_time("10:00"),
+        status=SidangStatus.LULUS
+    ),
+    Sidang(
+        id=9,
+        date=funcs.current_date(),
+        start=util.parse_time("08:00"),
+        end=util.parse_time("10:00"),
+        status=SidangStatus.LULUS
+    ),
+    Sidang(
+        id=10,
+        date=funcs.current_date(),
+        start=util.parse_time("08:00"),
+        end=util.parse_time("10:00"),
+        status=SidangStatus.LULUS
+    ),
+    Sidang(
+        id=11,
+        date=funcs.current_date(),
+        start=util.parse_time("08:00"),
+        end=util.parse_time("10:00"),
+        status=SidangStatus.LULUS
+    ),
+    Sidang(
+        id=13,
+        date=funcs.current_date(),
+        start=util.parse_time("08:00"),
+        end=util.parse_time("10:00"),
+        status=SidangStatus.LULUS
+    ),
+    Sidang(
+        id=14,
+        date=funcs.current_date(),
+        start=util.parse_time("08:00"),
+        end=util.parse_time("10:00"),
+        status=SidangStatus.LULUS
+    ),
+    Sidang(
+        id=15,
         date=funcs.current_date(),
         start=util.parse_time("08:00"),
         end=util.parse_time("10:00"),
@@ -481,6 +597,65 @@ Penguji.dummies = [
         sidang_id=7,
         nomor=1,
         status=PengujiStatus.MENGUJI
+    ),
+    Penguji(
+        id=1,
+        sidang_id=8,
+        nomor=1,
+        status=PengujiStatus.MENGUJI,
+        nilai=100
+    ),
+    Penguji(
+        id=2,
+        sidang_id=9,
+        nomor=1,
+        status=PengujiStatus.MENGUJI,
+        nilai=100
+    ),
+    Penguji(
+        id=1,
+        sidang_id=9,
+        nomor=2,
+        status=PengujiStatus.MENGUJI,
+        nilai=100
+    ),
+    Penguji(
+        id=1,
+        sidang_id=10,
+        nomor=1,
+        status=PengujiStatus.MENGUJI
+    ),
+    Penguji(
+        id=2,
+        sidang_id=10,
+        nomor=2,
+        status=PengujiStatus.MENGUJI
+    ),
+    Penguji(
+        id=2,
+        sidang_id=11,
+        nomor=1,
+        status=PengujiStatus.MENGUJI
+    ),
+    Penguji(
+        id=1,
+        sidang_id=13,
+        nomor=1,
+        status=PengujiStatus.MENGUJI,
+        nilai=100
+    ),
+    Penguji(
+        id=1,
+        sidang_id=14,
+        nomor=1,
+        status=PengujiStatus.MENGUJI
+    ),
+    Penguji(
+        id=1,
+        sidang_id=15,
+        nomor=1,
+        status=PengujiStatus.MENGUJI,
+        nilai=100
     ),
 ]
 Revisi.dummies = [
@@ -554,35 +729,123 @@ Revisi.dummies = [
         file_name="asdf.pdf",
         detail=""
     ),
+    Revisi(
+        id=8,
+        sidang_id=8,
+        penguji_id=1,
+        nomor=1,
+        status=RevisiStatus.DITOLAK,
+        created_at=funcs.now(),
+        file_name="asdf.pdf",
+        detail=""
+    ),
+    Revisi(
+        id=9,
+        sidang_id=8,
+        penguji_id=1,
+        nomor=2,
+        status=RevisiStatus.BARU,
+        created_at=funcs.now(),
+        file_name="asdf.pdf",
+        detail=""
+    ),
+    Revisi(
+        id=10,
+        sidang_id=9,
+        penguji_id=1,
+        nomor=1,
+        status=RevisiStatus.BARU,
+        created_at=funcs.now(),
+        file_name="asdf.pdf",
+        detail=""
+    ),
+    Revisi(
+        id=11,
+        sidang_id=9,
+        penguji_id=2,
+        nomor=1,
+        status=RevisiStatus.BARU,
+        created_at=funcs.now(),
+        file_name="asdf.pdf",
+        detail=""
+    ),
+    Revisi(
+        id=12,
+        sidang_id=10,
+        penguji_id=1,
+        nomor=1,
+        status=RevisiStatus.BARU,
+        created_at=funcs.now(),
+        file_name="asdf.pdf",
+        detail=""
+    ),
+    Revisi(
+        id=13,
+        sidang_id=13,
+        penguji_id=1,
+        nomor=1,
+        status=RevisiStatus.BARU,
+        created_at=funcs.now(),
+        file_name="asdf.pdf",
+        detail=""
+    ),
+    Revisi(
+        id=14,
+        sidang_id=14,
+        penguji_id=1,
+        nomor=1,
+        status=RevisiStatus.BARU,
+        created_at=funcs.now(),
+        file_name="asdf.pdf",
+        detail=""
+    ),
+    Revisi(
+        id=15,
+        sidang_id=15,
+        penguji_id=1,
+        nomor=1,
+        status=RevisiStatus.BARU,
+        created_at=funcs.now(),
+        file_name="asdf.pdf",
+        detail=""
+    ),
 ]
 PenolakanRevisi.dummies = [
     PenolakanRevisi(
         id=1,
         detail="Metode kurang relevan",
         file_name="rev.pdf"
+    ),
+    PenolakanRevisi(
+        id=8,
+        detail="Metode kurang relevan",
+        file_name="rev.pdf"
     )
 ]
 FormPomits.dummies = [
     FormPomits(
-        id=1,
+        id=8,
         check_1=True,
         check_2=True,
         check_3=False
     ),
     FormPomits(
-        id=2,
+        id=9,
         check_1=True,
         check_2=True,
         check_3=False
     ),
     FormPomits(
-        id=4,
+        id=11,
         check_1=True,
         check_2=True,
         check_3=False
     ),
     FormPomits(
-        id=7,
+        id=13,
+    ),
+    FormPomits(
+        id=14,
         check_1=True,
         check_2=True,
         check_3=False
