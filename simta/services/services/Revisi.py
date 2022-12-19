@@ -3,7 +3,6 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from simta.classes import Error
 from simta import models
 from flask_restful import reqparse
-from werkzeug.datastructures import FileStorage
 
 bp = Blueprint('revisi', __name__, url_prefix='/revisi')
 
@@ -32,23 +31,3 @@ def tolak(revisi_id):
         return {"result": "success"}
     except Error as ex:
         return {"message": ex.message}, ex.code
-
-
-@bp.route('/<int:revisi_id>/tolak/upload', methods=('PUT',))
-@jwt_required()
-def upload_file_penolakan(revisi_id):
-    user_id = get_jwt_identity()
-    parse = reqparse.RequestParser()
-    parse.add_argument('file', type=FileStorage, location='files')
-    args = parse.parse_args()
-    file = args['file'] if "file" in args else None
-    if not file:
-        return {"result": "Must provide file"}, 400
-    try:
-        models.Revisi.upload_file_penolakan(revisi_id, file, user_id)
-        return {"result": "success"}
-    except Error as ex:
-        return {"message": ex.message}, ex.code
-
-
-

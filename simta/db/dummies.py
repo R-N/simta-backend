@@ -28,6 +28,7 @@ judul_ta = [
     ("Untuk Ditolak 1", TAStatus.REVISI),
     ("Untuk Ditolak 2", TAStatus.REVISI),
     ("Untuk Ditolak 3", TAStatus.REVISI),
+    ("Revisi Ditolak", TAStatus.REVISI),
 ]
 Lab.dummies = [
     Lab(
@@ -155,6 +156,12 @@ Pembimbing.dummies = [
         nomor=1,
         status=PembimbingStatus.ACC
     ),
+    Pembimbing(
+        id=1,
+        ta_id=12,
+        nomor=1,
+        status=PembimbingStatus.ACC
+    ),
 ]
 Pembimbing.dummies = [
     *[
@@ -254,6 +261,12 @@ Penguji.dummies = [
     Penguji(
         id=1,
         sidang_id=11,
+        nomor=1,
+        status=PengujiStatus.MENGUJI
+    ),
+    Penguji(
+        id=1,
+        sidang_id=12,
         nomor=1,
         status=PengujiStatus.MENGUJI
     )
@@ -382,6 +395,16 @@ Revisi.dummies = [
         file_name="asdf.pdf",
         detail=""
     ),
+    Revisi(
+        id=12,
+        sidang_id=12,
+        penguji_id=1,
+        nomor=1,
+        status=RevisiStatus.DITOLAK,
+        created_at=funcs.now(),
+        file_name="asdf.pdf",
+        detail=""
+    ),
 ]
 Revisi.dummies = [
     *[
@@ -402,6 +425,11 @@ Revisi.dummies = [
 PenolakanRevisi.dummies = [
     PenolakanRevisi(
         id=1,
+        detail="Metode kurang relevan",
+        file_name="rev.pdf"
+    ),
+    PenolakanRevisi(
+        id=12,
         detail="Metode kurang relevan",
         file_name="rev.pdf"
     )

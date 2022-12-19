@@ -1,6 +1,8 @@
 from sqlalchemy import select
 from simta.classes import Error
 from simta import db, util, models
+import os
+from flask import send_from_directory
 
 allowed_fields = {
     "id", "sidang_id", "penguji_id", "nomor", "status", "created_at", "updated_at", "file_name", "detail"
@@ -186,6 +188,9 @@ def tolak(revisi_id, penguji_id, detail, file_name=None):
         if revisi.status != db.RevisiStatus.BARU and revisi.status != db.RevisiStatus.DILIHAT:
             raise Error("Anda sudah menerima/menolak revisi ini", 403)
 
+        if file_name and not os.path.isfile(os.path.join(DIR_FILE_PENOLAKAN, f"{revisi_id}.pdf")):
+            raise Error("Anda belum upload file penolakan", 403)
+
         if revisi.penolakan:
             revisi.penolakan.detail = detail
             if file_name:
@@ -205,6 +210,8 @@ def tolak(revisi_id, penguji_id, detail, file_name=None):
         session.commit()
         session.flush()
 
+DIR_FILE_PENOLAKAN = os.path.abspath("./simta/assets/files/penolakan_revisi")
+
 def upload_file_penolakan(revisi_id, file, penguji_id):
     with db.Session() as session:
         revisi = _get(session, revisi_id, penguji_id)
@@ -212,4 +219,20 @@ def upload_file_penolakan(revisi_id, file, penguji_id):
         if revisi.status != db.RevisiStatus.BARU and revisi.status != db.RevisiStatus.DILIHAT:
             raise Error("Anda sudah menerima/menolak revisi ini", 403)
 
-        file.save(f"./simta/assets/files/penolakan_revisi/{revisi_id}.pdf")
+        file.save(f"{DIR_FILE_PENOLAKAN}/{revisi_id}.pdf")
+
+def download_file_penolakan(revisi_id, penguji_id):
+    with db.Session() as session:
+        revisi = _get(session, revisi_id, penguji_id)
+
+        if revisi.status != db.RevisiStatus.DITOLAK:
+            raise Error("Revisi tidak ditolak", 403)
+
+        if not revisi.file_name:
+            raise Error("Revisi ditolak tanpa file", 403)
+
+        file_name = f"{revisi_id}.pdf"
+        if revisi.file_name and not os.path.isfile(os.path.join(DIR_FILE_PENOLAKAN, file_name)):
+            raise Error("File penolakan hilang", 404)
+
+        return send_from_directory(directory=models.Revisi.DIR_FILE_PENOLAKAN, path=file_name, as_attachment=True)

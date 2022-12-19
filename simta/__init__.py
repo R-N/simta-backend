@@ -38,7 +38,7 @@ def create_app(test_config=None):
 
     api = Api(app)
 
-    from simta.services.entities import Mahasiswa, Dosen, TA, TAList, Sidang, SidangList, Revisi, RevisiList, FormPomits
+    from simta.services.entities import Mahasiswa, Dosen, TA, TAList, Sidang, SidangList, Revisi, RevisiList, FilePenolakanRevisi, FormPomits
     api.add_resource(Mahasiswa, '/mahasiswa/<int:mhs_id>')
     api.add_resource(Dosen, '/dosen/<int:dosen_id>')
     api.add_resource(TA, '/ta/<int:ta_id>')
@@ -47,6 +47,7 @@ def create_app(test_config=None):
     api.add_resource(SidangList, '/sidang/')
     api.add_resource(Revisi, '/revisi/<int:revisi_id>')
     api.add_resource(RevisiList, '/sidang/<int:sidang_id>/revisi', '/ta/<int:sidang_id>/sidang/revisi', '/ta/<int:sidang_id>/revisi', '/revisi/sidang/<int:sidang_id>')
+    api.add_resource(FilePenolakanRevisi, '/revisi/<int:revisi_id>/penolakan/file')
     api.add_resource(FormPomits, '/pomits/form/<int:sidang_id>', '/sidang/<int:sidang_id>/pomits/form', '/ta/<int:sidang_id>/sidang/pomits/form')
 
     CORS(app)
