@@ -152,3 +152,4 @@ cython_debug/
 #.idea/
 simta/assets/files/penolakan_revisi/*
 .vercel
+tmp

@@ -1,9 +1,16 @@
 import os
+import shutil
 
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 from flask_cors import CORS
+
+WORKDIR = os.getenv("WORKDIR")
+if WORKDIR:
+    if os.path.isdir(f"{WORKDIR}/assets"):
+        shutil.rmtree(f"{WORKDIR}/assets")
+    shutil.copytree("simta/assets/", f"{WORKDIR}/assets", dirs_exist_ok=True)
 
 def create_app(test_config=None):
     # create and configure the app

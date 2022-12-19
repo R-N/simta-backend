@@ -23,8 +23,9 @@ DEFAULT_TA = True
 DEFAULT_MHS = True
 DEFAULT_REVISI_TERAKHIR = False
 
-DIR_FILE_PENOLAKAN = os.path.abspath("./simta/assets/files/penolakan_revisi")
-DIR_FILE_REVISI = os.path.abspath("./simta/assets/files/revisi")
+WORKDIR = os.getenv("WORKDIR", "simta")
+DIR_FILE_PENOLAKAN = os.path.abspath(f"{WORKDIR}/assets/files/penolakan_revisi")
+DIR_FILE_REVISI = os.path.abspath(f"{WORKDIR}/assets/files/revisi")
 
 def apply_filters(stmt, **kwargs):
     return util.apply_filters(stmt, allowed_filters, kwargs)

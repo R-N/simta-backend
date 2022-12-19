@@ -7,15 +7,18 @@ from .Base import Base
 from .dummies import *
 from .dummies import dummies
 from . import relationships
+import os
 
-db_file = "simta/assets/db.sqlite"
+db_file = "assets/db.sqlite"
+workdir = os.getenv("WORKDIR", "simta")
+db_path = f"{workdir}/{db_file}"
 
-engine = create_engine(f"sqlite+pysqlite:///{db_file}", echo=True, future=True)
+engine = create_engine(f"sqlite+pysqlite:///{db_path}", echo=True, future=True)
 Session = sessionmaker(engine)
 
 def init_dummy():
-    if os.path.isfile(db_file):
-        os.remove(db_file)
+    if os.path.isfile(db_path):
+        os.remove(db_path)
 
     Base.metadata.create_all(engine)
 
