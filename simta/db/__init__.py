@@ -8,7 +8,7 @@ from .dummies import *
 from .dummies import dummies
 from . import relationships
 
-db_file = "db.sqlite"
+db_file = "simta/assets/db.sqlite"
 
 engine = create_engine(f"sqlite+pysqlite:///{db_file}", echo=True, future=True)
 Session = sessionmaker(engine)
