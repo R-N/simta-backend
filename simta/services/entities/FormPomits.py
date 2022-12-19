@@ -11,4 +11,4 @@ class FormPomits(Resource):
         try:
             return models.FormPomits.get(sidang_id, user_id)
         except Error as ex:
-            return {"message": ex.message}, ex.code
+            return {"show": True, "message": ex.message}, ex.code

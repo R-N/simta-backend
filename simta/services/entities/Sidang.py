@@ -11,7 +11,7 @@ class Sidang(Resource):
         try:
             return models.Sidang.get(sidang_id, user_id=user_id)
         except Error as ex:
-            return {"message": ex.message}, ex.code
+            return {"show": True, "message": ex.message}, ex.code
 
 class SidangList(Resource):
     @jwt_required()
@@ -34,4 +34,4 @@ class SidangList(Resource):
         try:
             return models.Sidang.fetch(**args)
         except Error as ex:
-            return {"message": ex.message}, ex.code
+            return {"show": True, "message": ex.message}, ex.code

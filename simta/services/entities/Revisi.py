@@ -12,7 +12,7 @@ class Revisi(Resource):
         try:
             return models.Revisi.get(revisi_id, user_id)
         except Error as ex:
-            return {"message": ex.message}, ex.code
+            return {"show": True, "message": ex.message}, ex.code
 
 class FilePenolakanRevisi(Resource):
     @jwt_required()
@@ -21,7 +21,7 @@ class FilePenolakanRevisi(Resource):
         try:
             return models.Revisi.download_file_penolakan(revisi_id, user_id)
         except Error as ex:
-            return {"message": ex.message}, ex.code
+            return {"show": True, "message": ex.message}, ex.code
 
     @jwt_required()
     def put(self, revisi_id):
@@ -36,7 +36,7 @@ class FilePenolakanRevisi(Resource):
             models.Revisi.upload_file_penolakan(revisi_id, file, user_id)
             return {"result": "success"}
         except Error as ex:
-            return {"message": ex.message}, ex.code
+            return {"show": True, "message": ex.message}, ex.code
 
 class FileRevisi(Resource):
     @jwt_required()
@@ -45,7 +45,7 @@ class FileRevisi(Resource):
         try:
             return models.Revisi.download_file_revisi(revisi_id, user_id)
         except Error as ex:
-            return {"message": ex.message}, ex.code
+            return {"show": True, "message": ex.message}, ex.code
 
 class RevisiList(Resource):
     @jwt_required()
@@ -57,4 +57,4 @@ class RevisiList(Resource):
         try:
             return models.Revisi.fetch(sidang_id, user_id, **args)
         except Error as ex:
-            return {"message": ex.message}, ex.code
+            return {"show": True, "message": ex.message}, ex.code

@@ -15,7 +15,7 @@ def terima(revisi_id):
         ret["result"] = "success"
         return ret
     except Error as ex:
-        return {"message": ex.message}, ex.code
+        return {"show": True, "message": ex.message}, ex.code
 
 @bp.route('/<int:revisi_id>/tolak', methods=('POST',))
 @jwt_required()
@@ -24,10 +24,10 @@ def tolak(revisi_id):
     data = request.json
     detail, file_name = data.get("detail", None), data.get("file_name", None)
     if not (detail):
-        return {"result": "Must provide detail"}, 400
+        return {"show": True, "message": "Must provide detail"}, 400
 
     try:
         models.Revisi.tolak(revisi_id, user_id, detail, file_name)
         return {"result": "success"}
     except Error as ex:
-        return {"message": ex.message}, ex.code
+        return {"show": True, "message": ex.message}, ex.code

@@ -10,4 +10,4 @@ class Mahasiswa(Resource):
         try:
             return models.Mahasiswa.get(mhs_id)
         except Error as ex:
-            return {"message": ex.message}, ex.code
+            return {"show": True, "message": ex.message}, ex.code

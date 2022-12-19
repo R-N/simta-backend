@@ -10,4 +10,4 @@ class Dosen(Resource):
         try:
             return models.Dosen.get(dosen_id)
         except Error as ex:
-            return {"message": ex.message}, ex.code
+            return {"show": True, "message": ex.message}, ex.code

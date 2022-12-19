@@ -11,13 +11,13 @@ def login():
     username, password = data.get("username", None), data.get("password", None)
 
     if not (username and password):
-        return {"message": "Must provide username and password"}, 400
+        return {"show": True, "message": "Must provide username and password"}, 400
 
     try:
         api_key = models.User.login(username, password)
         return {"api_key": api_key}
     except Error as ex:
-        return {"message": ex.message}, ex.code
+        return {"show": True, "message": ex.message}, ex.code
 
 @bp.route('/current', methods=('GET',))
 @jwt_required()
@@ -26,6 +26,6 @@ def get_current():
     try:
         return models.User.get(user_id)
     except Error as ex:
-        return {"message": ex.message}, ex.code
+        return {"show": True, "message": ex.message}, ex.code
 
 
