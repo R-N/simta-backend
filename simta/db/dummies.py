@@ -294,7 +294,7 @@ Revisi.dummies = [
         created_at=funcs.now(),
         updated_at=funcs.now(),
         file_name="asdf.pdf",
-        detail=""
+        detail="sudah saya revisi pak"
     ),
     Revisi(
         id=2,
@@ -304,7 +304,7 @@ Revisi.dummies = [
         status=RevisiStatus.BARU,
         created_at=funcs.now(),
         file_name="asdf.pdf",
-        detail=""
+        detail="sudah saya revisi pak"
     ),
     Revisi(
         id=3,
@@ -314,7 +314,7 @@ Revisi.dummies = [
         status=RevisiStatus.BARU,
         created_at=funcs.now(),
         file_name="asdf.pdf",
-        detail=""
+        detail="sudah saya revisi pak"
     ),
     Revisi(
         id=4,
@@ -324,7 +324,7 @@ Revisi.dummies = [
         status=RevisiStatus.BARU,
         created_at=funcs.now(),
         file_name="asdf.pdf",
-        detail=""
+        detail="sudah saya revisi pak"
     ),
     Revisi(
         id=5,
@@ -334,7 +334,7 @@ Revisi.dummies = [
         status=RevisiStatus.BARU,
         created_at=funcs.now(),
         file_name="asdf.pdf",
-        detail=""
+        detail="sudah saya revisi pak"
     ),
     Revisi(
         id=6,
@@ -344,7 +344,7 @@ Revisi.dummies = [
         status=RevisiStatus.BARU,
         created_at=funcs.now(),
         file_name="asdf.pdf",
-        detail=""
+        detail="sudah saya revisi pak"
     ),
     Revisi(
         id=7,
@@ -354,7 +354,7 @@ Revisi.dummies = [
         status=RevisiStatus.BARU,
         created_at=funcs.now(),
         file_name="asdf.pdf",
-        detail=""
+        detail="sudah saya revisi pak"
     ),
     Revisi(
         id=8,
@@ -364,7 +364,7 @@ Revisi.dummies = [
         status=RevisiStatus.BARU,
         created_at=funcs.now(),
         file_name="asdf.pdf",
-        detail=""
+        detail="sudah saya revisi pak"
     ),
     Revisi(
         id=9,
@@ -374,7 +374,7 @@ Revisi.dummies = [
         status=RevisiStatus.BARU,
         created_at=funcs.now(),
         file_name="asdf.pdf",
-        detail=""
+        detail="sudah saya revisi pak"
     ),
     Revisi(
         id=10,
@@ -384,7 +384,7 @@ Revisi.dummies = [
         status=RevisiStatus.BARU,
         created_at=funcs.now(),
         file_name="asdf.pdf",
-        detail=""
+        detail="sudah saya revisi pak"
     ),
     Revisi(
         id=11,
@@ -394,7 +394,7 @@ Revisi.dummies = [
         status=RevisiStatus.BARU,
         created_at=funcs.now(),
         file_name="asdf.pdf",
-        detail=""
+        detail="sudah saya revisi pak"
     ),
     Revisi(
         id=12,
@@ -405,7 +405,7 @@ Revisi.dummies = [
         created_at=funcs.now(),
         updated_at=funcs.now(),
         file_name="asdf.pdf",
-        detail=""
+        detail="sudah saya revisi pak"
     ),
 ]
 Revisi.dummies = [
@@ -417,6 +417,7 @@ Revisi.dummies = [
             nomor=y.nomor,
             status=y.status,
             created_at=y.created_at,
+            updated_at=y.updated_at,
             file_name=y.file_name,
             detail=y.detail
         )
