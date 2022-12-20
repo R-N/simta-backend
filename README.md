@@ -1,6 +1,8 @@
 # simta-backend
  
-Made with flask and sqlalchemy. By default runs on http://localhost:5000
+Made with flask and sqlalchemy. By default runs on http://localhost:5000 .
+
+Frontend: https://github.com/R-N/simta-frontend
 
 Sample deployment: 
 - https://linearch.pythonanywhere.com/
@@ -17,3 +19,5 @@ Postman
 pip install -r /path/to/requirements.txt
 run.bat
 ```
+
+There's also sample WSGI and vercel file. You may need to append this project's path to sys path for WSGI (at least that's how it is for pythonanywhere).
