@@ -1,6 +1,6 @@
-flask
-sqlalchemy
-flask-jwt-extended
-flask-restful
-flask-cors
+Flask
+SQLAlchemy
+Flask-JWT-Extended
+Flask-RESTful
+Flask-Cors
 python-dotenv
