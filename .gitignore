@@ -153,3 +153,4 @@ cython_debug/
 simta/assets/files/penolakan_revisi/*
 .vercel
 tmp
+.env

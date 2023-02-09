@@ -1,10 +1,18 @@
 import os
 import shutil
+import datetime
+import logging
+import sys
 
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 from flask_cors import CORS
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 WORKDIR = os.getenv("WORKDIR")
 if WORKDIR:
@@ -14,6 +22,16 @@ if WORKDIR:
 
 def create_app(test_config=None):
     # create and configure the app
+    ct = datetime.datetime.now()
+
+    if os.getenv("LOG_TO_FILE"):
+        logging.basicConfig(filename=f"logs/{ct}.log".replace(":","-"), level=logging.DEBUG)
+        """
+        logger = logging.getLogger()
+        sys.stderr.write = logger.error
+        sys.stdout.write = logger.info
+        """
+
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='super-secret',
