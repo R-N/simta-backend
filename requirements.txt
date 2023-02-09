@@ -3,3 +3,4 @@ sqlalchemy
 flask-jwt-extended
 flask-restful
 flask-cors
+python-dotenv
