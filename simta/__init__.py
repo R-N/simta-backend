@@ -14,7 +14,6 @@ from pathlib import Path
 
 load_dotenv()
 
-
 WORKDIR = os.getenv("WORKDIR")
 if WORKDIR:
     if os.path.isdir(f"{WORKDIR}/assets"):
@@ -23,7 +22,7 @@ if WORKDIR:
 
 LOG_DIR = os.getenv("LOG_DIR")
 
-def create_app(test_config=None):
+def create_app(test_config=None, force_init_dummy=True):
     # create and configure the app
     if LOG_DIR:
         path = Path(LOG_DIR)
@@ -61,7 +60,7 @@ def create_app(test_config=None):
         pass
 
     from simta.db import init_dummy
-    init_dummy()
+    init_dummy(force_init_dummy)
 
     from simta.services.entities import User
     from simta.services.services import Revisi
