@@ -154,3 +154,4 @@ simta/assets/files/penolakan_revisi/*
 .vercel
 tmp
 .env
+logs/*
