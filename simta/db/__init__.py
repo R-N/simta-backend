@@ -17,8 +17,11 @@ engine = create_engine(f"sqlite+pysqlite:///{db_path}", echo=True, future=True)
 Session = sessionmaker(engine)
 
 def init_dummy():
+
     if os.path.isfile(db_path):
-        os.remove(db_path)
+        #os.remove(db_path)
+        print("Db already exists")
+        return
 
     Base.metadata.create_all(engine)
 

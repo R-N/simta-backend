@@ -10,6 +10,7 @@ from flask_restful import Api
 from flask_cors import CORS
 
 from dotenv import load_dotenv
+from pathlib import Path
 
 load_dotenv()
 
@@ -20,15 +21,18 @@ if WORKDIR:
         shutil.rmtree(f"{WORKDIR}/assets")
     shutil.copytree("simta/assets/", f"{WORKDIR}/assets", dirs_exist_ok=True)
 
+LOG_DIR = os.getenv("LOG_DIR")
+
 def create_app(test_config=None):
     # create and configure the app
-
-    if os.getenv("LOG_DIR"):
+    if LOG_DIR:
+        path = Path(LOG_DIR)
+        path.mkdir(parents=True, exist_ok=True)
         ct = datetime.datetime.now()
         logging.basicConfig(
             filename=os.path.join(
-                os.getenv("LOG_DIR"),
-                f"logs/{ct}.log".replace(":","-")
+                LOG_DIR,
+                f"{ct}.log".replace(":","-")
             ), level=logging.DEBUG
         )
         """
