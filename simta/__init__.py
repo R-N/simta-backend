@@ -22,10 +22,15 @@ if WORKDIR:
 
 def create_app(test_config=None):
     # create and configure the app
-    ct = datetime.datetime.now()
 
-    if os.getenv("LOG_TO_FILE"):
-        logging.basicConfig(filename=f"logs/{ct}.log".replace(":","-"), level=logging.DEBUG)
+    if os.getenv("LOG_DIR"):
+        ct = datetime.datetime.now()
+        logging.basicConfig(
+            filename=os.path.join(
+                os.getenv("LOG_DIR"),
+                f"logs/{ct}.log".replace(":","-")
+            ), level=logging.DEBUG
+        )
         """
         logger = logging.getLogger()
         sys.stderr.write = logger.error

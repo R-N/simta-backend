@@ -155,3 +155,5 @@ simta/assets/files/penolakan_revisi/*
 tmp
 .env
 logs/*
+app2.py
+test.py
