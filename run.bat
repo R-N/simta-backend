@@ -1,1 +1,1 @@
-flask --app simta --debug run --no-reload
+flask --app simta --debug run --no-reload --port 8000
