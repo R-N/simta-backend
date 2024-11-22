@@ -1,7 +1,7 @@
 import os
 import sys
 
-ROOT_DIR = "a"
+ROOT_DIR = "."
 
 try:
     import logging, logging.handlers
