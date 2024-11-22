@@ -8,7 +8,7 @@ from werkzeug.datastructures import FileStorage
 class Revisi(Resource):
     @jwt_required()
     def get(self, revisi_id):
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         try:
             return models.Revisi.get(revisi_id, user_id)
         except Error as ex:
@@ -17,7 +17,7 @@ class Revisi(Resource):
 class FilePenolakanRevisi(Resource):
     @jwt_required()
     def get(self, revisi_id):
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         try:
             return models.Revisi.download_file_penolakan(revisi_id, user_id)
         except Error as ex:
@@ -25,7 +25,7 @@ class FilePenolakanRevisi(Resource):
 
     @jwt_required()
     def put(self, revisi_id):
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         parse = reqparse.RequestParser()
         parse.add_argument('file', type=FileStorage, location='files')
         args = parse.parse_args()
@@ -41,7 +41,7 @@ class FilePenolakanRevisi(Resource):
 class FileRevisi(Resource):
     @jwt_required()
     def get(self, revisi_id):
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         try:
             return models.Revisi.download_file_revisi(revisi_id, user_id)
         except Error as ex:
@@ -50,7 +50,7 @@ class FileRevisi(Resource):
 class RevisiList(Resource):
     @jwt_required()
     def get(self, sidang_id):
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         parser = reqparse.RequestParser()
         parser.add_argument("status", type=int, help="Status revisi", location='args')
         args = parser.parse_args()

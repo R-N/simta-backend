@@ -7,7 +7,7 @@ from simta.classes import Error
 class FormPomits(Resource):
     @jwt_required()
     def get(self, sidang_id):
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         try:
             return models.FormPomits.get(sidang_id, user_id)
         except Error as ex:

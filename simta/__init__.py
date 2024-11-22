@@ -52,6 +52,7 @@ def create_app(test_config=None, force_init_dummy=True):
     else:
         # load the test config if passed in
         app.config.from_mapping(test_config)
+    app.config['PROPAGATE_EXCEPTIONS'] = True
 
     # ensure the instance folder exists
     try:

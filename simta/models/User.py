@@ -18,7 +18,7 @@ def login(username, password):
     if not user or not user.check_password(password):
         raise Error("User not found or wrong password", 401)
 
-    return create_access_token(identity=user.id)
+    return create_access_token(identity=str(user.id))
 
 def get(user_id):
     with db.Session() as session:

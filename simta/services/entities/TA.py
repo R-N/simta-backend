@@ -7,7 +7,7 @@ from simta.classes import Error
 class TA(Resource):
     @jwt_required()
     def get(self, ta_id):
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         try:
             return models.TA.get(ta_id, user_id)
         except Error as ex:
@@ -24,7 +24,7 @@ class TAList(Resource):
         parser.add_argument("status", type=int, help="Status TA", location='args')
         args = parser.parse_args()
 
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         args["pembimbing_id"] = user_id
         args["penguji_id"] = user_id
 

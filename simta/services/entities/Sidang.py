@@ -7,7 +7,7 @@ from simta.classes import Error
 class Sidang(Resource):
     @jwt_required()
     def get(self, sidang_id):
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         try:
             return models.Sidang.get(sidang_id, user_id=user_id)
         except Error as ex:
@@ -26,7 +26,7 @@ class SidangList(Resource):
         parser.add_argument("status", type=int, help="Status sidang", location='args')
         args = parser.parse_args()
 
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         args["user_id"] = user_id
         args["pembimbing_id"] = user_id
         args["penguji_id"] = user_id
